@@ -3,9 +3,12 @@ import customtkinter as ctk
 
 def shorten_url():
     shortner = pyshorteners.Shortener()
-    shortened_url = shortner.tinyurl.short(url_entry.get())
-    url_output.delete(1.0, 'end')
-    url_output.insert('end', shortened_url)
+    try:
+        shortened_url = shortner.tinyurl.short(url_entry.get())
+        url_output.delete(1.0, 'end')
+        url_output.insert('end', shortened_url)
+    except Exception:
+        messagebox("Error", "Invalid URL")
 
 def copy_to_clipboard():
     root.clipboard_clear()
@@ -29,8 +32,6 @@ url_entry = ctk.CTkEntry(root, width=150)
 shorten_button = ctk.CTkButton(root, text="Shorten URL", command=shorten_url)
 url_output = ctk.CTkTextbox(root, height=1, width=150)
 copy_button = ctk.CTkButton(root, text="Copy to Clipboard", command=copy_to_clipboard)
-
-
 
 url_label.grid(row=1, column=0,padx=10,pady=20)
 url_entry.grid(row=1, column=1,padx=10)
